@@ -9,4 +9,4 @@ data class GitHubRepo(
     @Json(name = "html_url") val url: String,
     val description: String?,
     @Json(name = "stargazers_count") val stars: Int
-)
+) : java.io.Serializable

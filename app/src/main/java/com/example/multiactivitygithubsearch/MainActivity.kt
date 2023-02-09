@@ -1,5 +1,6 @@
 package com.example.multiactivitygithubsearch
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
@@ -11,6 +12,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.multiactivitygithubsearch.api.GitHubService
+import com.example.multiactivitygithubsearch.data.GitHubRepo
 import com.example.multiactivitygithubsearch.data.GitHubSearchResults
 import com.google.android.material.progressindicator.CircularProgressIndicator
 import retrofit2.Call
@@ -21,7 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
 
     private val gitHubService = GitHubService.create()
-    private val repoListAdapter = GitHubRepoListAdapter()
+    private val repoListAdapter = GitHubRepoListAdapter(::onGitHubRepoClick)
 
     private lateinit var searchResultsListRV: RecyclerView
     private lateinit var searchErrorTV: TextView
@@ -30,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+//        supportActionBar?.title = "New title"
 
         val searchBoxET: EditText = findViewById(R.id.et_search_box)
         val searchBtn: Button = findViewById(R.id.btn_search)
@@ -122,5 +126,11 @@ class MainActivity : AppCompatActivity() {
                     searchErrorTV.text = getString(R.string.search_error, t.message)
                 }
             })
+    }
+
+    private fun onGitHubRepoClick(repo: GitHubRepo) {
+        val intent = Intent(this, RepoDetailActivity::class.java)
+        intent.putExtra(EXTRA_GITHUB_REPO, repo)
+        startActivity(intent)
     }
 }

@@ -5,4 +5,7 @@
     <string name="search">Search</string>
 
     <string name="search_error">Error fetching search results: %1$s</string>
+
+    <string name="action_share">Share</string>
+    <string name="action_view_on_web">View this repo on GitHub</string>
 </resources>
